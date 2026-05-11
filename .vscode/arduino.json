@@ -1,0 +1,6 @@
+{
+    "sketch": "STICKCPLUS2-THI-AirGate.ino",
+    "configuration": "PSRAM=enabled,PartitionScheme=default_8MB,CPUFreq=240,FlashMode=qio,FlashFreq=80,FlashSize=8M,UploadSpeed=1500000,LoopCore=1,EventsCore=1,DebugLevel=none,EraseFlash=none",
+    "board": "m5stack:esp32:m5stack_stickc_plus2",
+    "port": "/dev/tty.usbserial-58FB0013551"
+}
