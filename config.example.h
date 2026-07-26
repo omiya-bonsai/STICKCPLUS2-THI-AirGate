@@ -11,8 +11,10 @@
 // MQTT
 // =====================================================
 
-#define MQTT_BROKER "192.168.3.82"
+#define MQTT_BROKER "192.168.3.200"
 #define MQTT_PORT 1883
+#define MQTT_USER ""
+#define MQTT_PASSWORD ""
 
 // =====================================================
 // MQTT TOPICS

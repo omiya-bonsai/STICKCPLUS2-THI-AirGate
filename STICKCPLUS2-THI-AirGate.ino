@@ -586,7 +586,7 @@ void reconnectMQTT()
         "STICKCPLUS2-AirGate-" +
         String(random(0xffff), HEX);
 
-    if (client.connect(clientId.c_str()))
+    if (client.connect(clientId.c_str(), MQTT_USER, MQTT_PASSWORD))
     {
         Serial.println("MQTT connected");
         mqttReconnectCount++;
