@@ -35,7 +35,9 @@ const uint32_t SAVER_FRAME_INTERVAL_MS = 120;
 
 const uint32_t DATA_TIMEOUT_MS = 30000;
 const uint32_t WIFI_CONNECT_TIMEOUT_MS = 30000;
-const int MQTT_RECONNECT_MAX_ATTEMPTS = 5;
+const uint32_t MQTT_RECONNECT_FAST_INTERVAL_MS = 5000;
+const uint32_t MQTT_RECONNECT_SLOW_INTERVAL_MS = 60000;
+const int MQTT_RECONNECT_FAST_ATTEMPTS = 5;
 const uint32_t HEALTH_LOG_INTERVAL_MS = 60000;
 const uint32_t AUTO_REBOOT_INTERVAL_MS = 24UL * 60UL * 60UL * 1000UL;
 
@@ -558,21 +560,25 @@ void reconnectMQTT()
         return;
     }
 
+    if (WiFi.status() != WL_CONNECTED)
+    {
+        return;
+    }
+
     static uint32_t lastMqttAttemptMs = 0;
     static int mqttFailCount = 0;
 
     uint32_t now = millis();
-    if ((now - lastMqttAttemptMs) < 5000)
+    uint32_t reconnectInterval =
+        (mqttFailCount < MQTT_RECONNECT_FAST_ATTEMPTS)
+            ? MQTT_RECONNECT_FAST_INTERVAL_MS
+            : MQTT_RECONNECT_SLOW_INTERVAL_MS;
+
+    if ((now - lastMqttAttemptMs) < reconnectInterval)
     {
         return;
     }
     lastMqttAttemptMs = now;
-
-    if (mqttFailCount >= MQTT_RECONNECT_MAX_ATTEMPTS)
-    {
-        Serial.println("MQTT: max reconnection attempts reached");
-        return;
-    }
 
     M5.Display.fillScreen(BLACK);
     M5.Display.setCursor(10, 20);
@@ -580,7 +586,7 @@ void reconnectMQTT()
     M5.Display.setTextColor(TFT_CYAN);
     M5.Display.print("MQTT... (attempt ");
     M5.Display.print(mqttFailCount + 1);
-    M5.Display.println("/" + String(MQTT_RECONNECT_MAX_ATTEMPTS) + ")");
+    M5.Display.println(")");
 
     String clientId =
         "STICKCPLUS2-AirGate-" +
@@ -654,7 +660,10 @@ void loop()
 
     reconnectMQTT();
 
-    client.loop();
+    if (client.connected())
+    {
+        client.loop();
+    }
 
     bool wasNormalDisplay = isNormalDisplayActive();
 

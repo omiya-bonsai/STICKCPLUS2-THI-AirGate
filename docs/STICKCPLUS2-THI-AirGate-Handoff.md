@@ -245,6 +245,8 @@ WIFI_PASSWORD
 
 MQTT_BROKER
 MQTT_PORT
+MQTT_USER
+MQTT_PASSWORD
 
 MQTT_TOPIC_LIVING
 MQTT_TOPIC_ENTRANCE
@@ -437,7 +439,7 @@ STICKCPLUS2-THI-AirGate
 macOS / Linux：
 
 ```bash
-mosquitto_sub -h 192.168.3.82 -t 'home/#' -v
+mosquitto_sub -h 192.168.3.200 -u "$MQTT_USER" -P "$MQTT_PASSWORD" -t 'home/#' -v
 ```
 
 ---
@@ -445,7 +447,7 @@ mosquitto_sub -h 192.168.3.82 -t 'home/#' -v
 ## THI確認
 
 ```bash
-mosquitto_sub -h 192.168.3.82 \
+mosquitto_sub -h 192.168.3.200 -u "$MQTT_USER" -P "$MQTT_PASSWORD" \
 -t 'home/co2/aggregate/raw' \
 -t 'home/env/env4-entrance/raw' -v
 ```

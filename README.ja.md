@@ -68,6 +68,8 @@ cp config.example.h config.h
 #define WIFI_PASSWORD "Your-WiFi-Password"
 #define MQTT_BROKER "192.168.x.x"
 #define MQTT_PORT 1883
+#define MQTT_USER "Your-MQTT-User"
+#define MQTT_PASSWORD "Your-MQTT-Password"
 #define MQTT_TOPIC_LIVING "home/sensor/living"
 #define MQTT_TOPIC_ENTRANCE "home/sensor/entrance"
 #define THI_OPEN_DIFF 0.5
@@ -198,7 +200,7 @@ USB 接続時、シリアルモニタ（115200 ボー）で以下を確認:
 - 回転チェック: 200ms
 - モーション検知: 100ms
 - ディスプレイ更新: 可変（状態変化時のみ）
-- MQTT リコネクト: 5秒間隔、最大 5 回試行
+- MQTT リコネクト: 最初の 5 回は 5秒間隔、その後は復旧まで 60秒間隔で継続
 - ヘルスログ出力: 60秒間隔
 - 自動再起動: 24時間間隔（デフォルト）
 

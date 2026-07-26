@@ -69,6 +69,8 @@ Edit `config.h` with your WiFi and MQTT details:
 #define WIFI_PASSWORD "Your-WiFi-Password"
 #define MQTT_BROKER "192.168.x.x"
 #define MQTT_PORT 1883
+#define MQTT_USER "Your-MQTT-User"
+#define MQTT_PASSWORD "Your-MQTT-Password"
 #define MQTT_TOPIC_LIVING "home/sensor/living"
 #define MQTT_TOPIC_ENTRANCE "home/sensor/entrance"
 #define THI_OPEN_DIFF 0.5
@@ -199,7 +201,7 @@ Connect via USB and open Serial Monitor (115200 baud) to see:
 - Rotation check: 200ms
 - Motion detection: 100ms
 - Display refresh: Variable (redraw only on change)
-- MQTT reconnect attempts: 5 second intervals, max 5 attempts
+- MQTT reconnect attempts: 5 second intervals for the first 5 failures, then every 60 seconds until recovery
 - Health log output: every 60 seconds
 - Auto reboot: every 24 hours (default)
 
